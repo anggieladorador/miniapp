@@ -29,6 +29,7 @@ class Server {
   routes() {
     //API USUARIO
     const userRoutes = this.app.use("/api/user", require("../routes/index"));
+    const authRoutes = this.app.use("/api/auth", require("../routes/auth"))
   }
 
   listen() {
