@@ -2,6 +2,7 @@ const {response} = require("express")
 
 const User = require("../models/user")
 const bcrypt = require("bcrypt")
+const {generateToken}=require("../helpers/jwt")
 
 const login = async (req, res=response)=>{
   const {email, pass} = req.body
@@ -27,9 +28,13 @@ const login = async (req, res=response)=>{
         msg:"contraseña equivocada"
       })
     }
+    //generar JWT (JSON WEB TOKEN)
+    const token = await generateToken(user.id)
+    
+   
 
     res.json({
-      msg:"login ok"
+      msg:"login ok",token
     })
 
     
