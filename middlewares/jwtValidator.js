@@ -7,7 +7,7 @@ const jwtValidator = (req= request, res= response, next)=>{
   //no hay token
   if(!token){
     return res.status(400).json({
-      msg:"TOKEN no válido"
+      msg:"toke inexistente"
     })
   }
   try {
