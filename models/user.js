@@ -13,7 +13,8 @@ const UserSchema = Schema({
 //rescribe metodo toJSON para no mostrar __v y pass
 //cuando se muestra la respuesta
 UserSchema.methods.toJSON = function () {
-  const { __v, pass, ...user } = this.toObject();
+  const { __v, pass,id,  ...user } = this.toObject();
+  user.uid = id //transforma en vista el id mostrandolo como uid
   return user;
 };
 
