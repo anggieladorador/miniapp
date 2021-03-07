@@ -3,8 +3,8 @@ const { check } = require("express-validator");
 
 const router = Router();
 const userController = require("../controller/user");
-
-const { fieldValidator } = require("../middlewares/fieldValidator");
+const  {jwtValidator} = require("../middlewares/jwtValidator")
+const { fieldValidator, } = require("../middlewares/fieldValidator");
 const { isRegistered, isIdRegistered } = require("../helpers/userHelper");
 //router.metodo("ruta",middleware,controlador)
 router.get("/", userController.getUser);
@@ -30,6 +30,7 @@ router.put("/:id",[
 ] ,userController.updateUser);
 
 router.delete("/:id",[
+  jwtValidator,
   check("id", "no es un id válido").isMongoId(),
   check("id").custom(isIdRegistered),
   fieldValidator
