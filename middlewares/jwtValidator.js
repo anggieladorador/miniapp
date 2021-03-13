@@ -1,19 +1,28 @@
 const { response, request } = require("express")
 const jwt = require("jsonwebtoken")
+const User = require("../models/user")
 
-const jwtValidator = (req= request, res= response, next)=>{
+const jwtValidator =  async (req= request, res= response, next)=>{
   const token = req.header("x-token")
   
   //no hay token
   if(!token){
     return res.status(400).json({
-      msg:"toke inexistente"
+      msg:"token inexistente"
     })
   }
   try {
     const {uid}= jwt.verify(token ,process.env.PUBLICORSECRETKEY)
-    req.uid = uid
-    console.log(uid)
+
+    const authenticatedUser = await User.findById(uid)
+    
+    if(!authenticatedUser.isActive){
+      return res.status(500).json({
+        msg:"Usuario no valido"
+      })
+    }
+
+    req.user = authenticatedUser
     next()
     
   } catch (error) {
