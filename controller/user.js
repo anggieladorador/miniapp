@@ -7,7 +7,7 @@ const getUser = async(req, res = response) => {
   //const params = req.query;
   //para paginar 
   const {limit = 5, from = 0} = req.query
-  const query = {estado:true}
+  const query = {isActive:true}
   /*const usuarios = await User.find(query)
     .skip(Number(from ))
     .limit(Number(limit)) //se entrega limite como string así que se parsea a numero
@@ -62,9 +62,11 @@ const updateUser = async(req, res = response) => {
 
 const deleteUser = async(req, res = response)=>{
   const {id}=req.params
-  const user = await User.findByIdAndUpdate(id, {estado:false})
+  const authUser = req.user
+  const user = await User.findByIdAndUpdate(id, {isActive:false})
   res.json({
     msg:"eliminado", 
+    authUser,
     user
   })
 
