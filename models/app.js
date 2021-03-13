@@ -1,4 +1,5 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
+const {Schema,  model} = require("mongoose")
 
 const AppSchema = Schema({
   name: {
@@ -18,3 +19,5 @@ const AppSchema = Schema({
     ref: 'User'
   }
 });
+
+module.exports = model("App",AppSchema)
