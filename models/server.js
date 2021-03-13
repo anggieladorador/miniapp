@@ -2,7 +2,7 @@ require("dotenv").config();
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
+
 
 const { dbConection } = require("./../db/config");
 
@@ -20,8 +20,8 @@ class Server {
 
   middlewares() {
     this.app.use(cors());
-    this.app.use(bodyParser.urlencoded({ extended: false }));
-    this.app.use(bodyParser.json());
+    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(express.json());
     //static files
     this.app.use("/public", express.static(path.join(__dirname, "../public")));
   }
@@ -29,6 +29,7 @@ class Server {
   routes() {
     //API USUARIO
     const userRoutes = this.app.use("/api/user", require("../routes/index"));
+    const appRoutes = this.app.use("/api/app", require("../routes/applications"))
     const authRoutes = this.app.use("/api/auth", require("../routes/auth"))
   }
 
