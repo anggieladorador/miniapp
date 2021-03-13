@@ -13,4 +13,8 @@ const AppSchema = Schema({
     type: String,
     required: [true, "el link del proyecto es obligatorio"],
   },
+  user:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 });
