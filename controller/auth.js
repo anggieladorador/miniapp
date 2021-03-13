@@ -8,6 +8,7 @@ const login = async (req, res=response)=>{
   const {email, pass} = req.body
   try {
     const user = await User.findOne({email})
+    console.log(user)
     //es usuario?
     if(!user){
       return res.status(400).json({
@@ -15,7 +16,7 @@ const login = async (req, res=response)=>{
       })
     }
     //está activo?
-    if(!user.estado){
+    if(!user.isActive){
       return res.status(400).json({
         msg:"usuario no activo"
       })
