@@ -8,7 +8,7 @@ const login = async (req, res=response)=>{
   const {email, pass} = req.body
   try {
     const user = await User.findOne({email})
-    console.log(user)
+  
     //es usuario?
     if(!user){
       return res.status(400).json({
@@ -32,15 +32,12 @@ const login = async (req, res=response)=>{
     //generar JWT (JSON WEB TOKEN)
     const token = await generateToken(user.id)
     
-   
-
     res.json({
       msg:"login ok",token
     })
 
     
   } catch (error) {
-    console.log(error)
     res.status(500).json({
       msg:"no se ha encontrado email"
     })
