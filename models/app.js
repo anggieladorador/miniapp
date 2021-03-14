@@ -24,6 +24,7 @@ const AppSchema = Schema({
 
 AppSchema.methods.toJSON = function (){
   const { __v, _id, user, ...app} = this.toObject()
+  app.id = _id
   return app
 }
 module.exports = model("App",AppSchema)
