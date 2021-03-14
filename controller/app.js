@@ -6,7 +6,7 @@ const ObjectId = require("mongoose").Types.ObjectId;
 const postApp  = async (req, res)=>{
   const { name, desc, link} = req.body
   const {id} = req.user
-  console.log(id)
+
   const app = new App({name, desc, link})
   app.user = id
   await app.save()
