@@ -27,7 +27,7 @@ const getUser = async(req, res = response) => {
   });
 };
 const postUser = async (req, res = response) => {
-  console.log(req.body);
+
   const { name, email, pass, google } = req.body;
   const user = new User({ name, email, pass, google });
   //hash password
