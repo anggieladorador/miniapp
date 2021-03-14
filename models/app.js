@@ -14,10 +14,12 @@ const AppSchema = Schema({
     type: String,
     required: [true, "el link del proyecto es obligatorio"],
   },
+  isActive:{type:Boolean, default:true},
   user:{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
+  
 });
 
 AppSchema.methods.toJSON = function (){
