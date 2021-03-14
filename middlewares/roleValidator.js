@@ -1,3 +1,5 @@
+const app = require("../models/app")
+const user = require("../models/user")
 
 const roleValidator = (req, res, next )=>{
   if(!req.user){
@@ -33,4 +35,29 @@ const hasRole = (...roles)=>{
 
 }
 
-module.exports = {roleValidator, hasRole}
+const hasPermission = (role)=>{
+  return  async (req, res, next)=>{
+    const {id} = req.params
+    const userId = req.user.id
+    if(role === "USER_ROLE"){
+      const hasApp = await app.findById(id)
+      if(hasApp.user == userId){
+        next()
+      }
+      else{
+        return res.status(401).json({
+          msg:"No tienes permiso para eliminar esta app"
+        })
+      }
+    }
+    else{
+      return res.status(401).json({
+        msg:"tienes que ser usuario de esta cuenta para poder eliminar la app"
+      })
+    }
+
+
+  }
+  
+}
+module.exports = {roleValidator, hasRole, hasPermission}
