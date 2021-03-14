@@ -16,4 +16,8 @@ router.post("/",[
   fieldValidator
 ],applications.postApp)
 
+router.get("/user",[
+  jwtValidator
+],applications.getAppsByUserId)
+
 module.exports=router
