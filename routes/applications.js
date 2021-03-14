@@ -6,6 +6,7 @@ const router = Router();
 const applications = require("../controller/app");
 const { fieldValidator } = require("../middlewares/fieldValidator");
 const { jwtValidator } = require("../middlewares/jwtValidator");
+const { hasRole, hasPermission } = require("../middlewares/roleValidator");
 
 
 router.post("/",[
@@ -19,5 +20,10 @@ router.post("/",[
 router.get("/user",[
   jwtValidator
 ],applications.getAppsByUserId)
+
+router.delete("/:id",[
+  jwtValidator,
+  hasPermission("USER_ROLE"),
+],applications.deleteApp)
 
 module.exports=router

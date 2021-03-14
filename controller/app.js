@@ -35,7 +35,18 @@ const getAppsByUserId = async (req, res)=>{
   }
 }
 
+const deleteApp = async (req, res)=>{
+  const {id} = req.params
+  const  app = await App.findByIdAndUpdate(id, {isActive:false})
+
+  res.json({
+    msg:"Aplicación Eliminada"
+  })
+
+}
+
 module.exports = {
   postApp,
-  getAppsByUserId
+  getAppsByUserId,
+  deleteApp
 }
