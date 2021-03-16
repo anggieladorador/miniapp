@@ -15,7 +15,7 @@ const jwtValidator =  async (req= request, res= response, next)=>{
     const {uid}= jwt.verify(token ,process.env.PUBLICORSECRETKEY)
 
     const authenticatedUser = await User.findById(uid)
-    
+    console.log(authenticatedUser)
     if(!authenticatedUser.isActive){
       return res.status(500).json({
         msg:"Usuario no valido"
@@ -26,7 +26,7 @@ const jwtValidator =  async (req= request, res= response, next)=>{
     next()
     
   } catch (error) {
- 
+    console.log(error)
     res.status(401).json({
       msg:"token no válido"
     })
