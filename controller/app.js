@@ -37,6 +37,14 @@ const getAppsByUserId = async (req, res)=>{
 
 const deleteApp = async (req, res)=>{
   const {id} = req.params
+  const userId = req.user.id
+  const userApp = await App.findById(id)
+  console.log(userApp)
+  if(userApp.user !=userId ){
+    return res.status(401).json({
+      msg:"No puedes eliminar esta aplicación - usuario no corresponde"
+    })
+  }
   const  app = await App.findByIdAndUpdate(id, {isActive:false})
 
   res.json({
