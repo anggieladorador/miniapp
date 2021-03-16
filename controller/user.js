@@ -2,6 +2,8 @@ const { response } = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
+const {uploadFile}= require("../helpers/uploadHelper")
+
 const getUser = async(req, res = response) => {
   //en caso que la url sea /api/user?q=nombre&otracosa=texto
   //const params = req.query;
@@ -72,9 +74,22 @@ const deleteUser = async(req, res = response)=>{
 
 }
 
+const profileImg = async (req, res)=>{
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('no fueron cargados archivos');
+    
+  }
+
+  const pathfile = await uploadFile(req.files, undefined, "users")
+   res.json({
+     msg: `imagen creada en ${pathfile}`
+   }) 
+
+}
 module.exports = {
   getUser,
   postUser,
   updateUser,
-  deleteUser
+  deleteUser, 
+  profileImg
 };
