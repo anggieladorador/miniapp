@@ -5,10 +5,13 @@ const router = Router();
 const userController = require("../controller/user");
 const  {jwtValidator} = require("../middlewares/jwtValidator")
 const { fieldValidator, } = require("../middlewares/fieldValidator");
-const {hasRole} = require("../middlewares/roleValidator");
+const { hasPermission, hasUserPermissionToDeleteUser} = require("../middlewares/roleValidator");
 const { isRegistered, isIdRegistered } = require("../helpers/userHelper");
 //router.metodo("ruta",middleware,controlador)
-router.get("/", userController.getUser);
+router.get("/",
+[ jwtValidator,
+  hasPermission("ADMIN_ROLE", "obtener usuarios")]
+, userController.getUser);
 
 router.post(
   "/",
@@ -31,8 +34,8 @@ router.put("/:id",[
 
 router.delete("/:id",[
   jwtValidator,
-  //roleValidator,
-  hasRole("ADMIN_ROLE","USER_ROLE"),
+  hasPermission( "Eliminar cuenta","ADMIN_ROLE","USER_ROLE"),
+  hasUserPermissionToDeleteUser,
   check("id", "no es un id válido").isMongoId(),
   check("id").custom(isIdRegistered),
   fieldValidator
