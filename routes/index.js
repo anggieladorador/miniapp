@@ -13,6 +13,8 @@ router.get("/",
   hasPermission("ADMIN_ROLE", "obtener usuarios")]
 , userController.getUser);
 
+router.post("/upload", userController.profileImg)
+
 router.post(
   "/",
   [
