@@ -75,9 +75,17 @@ const deleteUser = async(req, res = response)=>{
 }
 
 const profileImg = async (req, res)=>{
+  const {id} = req.user
+  const userId = req.params.id
+  console.log(id)
+  if(id !=userId){
+    return res.status(403).json({
+      msg: "no estas autorizado para esto"
+    })
+  }
+  
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send('no fueron cargados archivos');
-    
   }
 
   const pathfile = await uploadFile(req.files, undefined, "users")

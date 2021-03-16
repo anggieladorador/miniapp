@@ -13,7 +13,12 @@ router.get("/",
   hasPermission("ADMIN_ROLE", "obtener usuarios")]
 , userController.getUser);
 
-router.post("/upload", userController.profileImg)
+
+router.put("/upload/:id",[
+  jwtValidator,
+  check("id", "no es un id válido").isMongoId(),
+  fieldValidator
+],userController.profileImg)
 
 router.post(
   "/",
