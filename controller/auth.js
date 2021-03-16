@@ -7,7 +7,8 @@ const {generateToken}=require("../helpers/jwt")
 const login = async (req, res=response)=>{
   const {email, pass} = req.body
   try {
-    const user = await User.findOne({email})
+    const user = await User.findOne({email:email})
+    console.log("usuario",user)
   
     //es usuario?
     if(!user){
@@ -33,7 +34,9 @@ const login = async (req, res=response)=>{
     const token = await generateToken(user.id)
     
     res.json({
-      msg:"login ok",token
+      msg:"login ok",
+      user,
+      token
     })
 
     
