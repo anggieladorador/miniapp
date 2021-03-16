@@ -23,7 +23,7 @@ const AppSchema = Schema({
 });
 
 AppSchema.methods.toJSON = function (){
-  const { __v, _id, user, ...app} = this.toObject()
+  const { __v, _id, ...app} = this.toObject()
   app.id = _id
   return app
 }
