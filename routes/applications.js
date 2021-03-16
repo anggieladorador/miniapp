@@ -23,7 +23,8 @@ router.get("/user",[
 
 router.delete("/:id",[
   jwtValidator,
-  hasPermission("USER_ROLE"),
+  hasPermission("eliminar aplicación", "USER_ROLE"),
+
 ],applications.deleteApp)
 
 module.exports=router
