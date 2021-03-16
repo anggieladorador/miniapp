@@ -1,0 +1,1 @@
+#nota: Aqui se guardarán imágenes de usuarios y apps
