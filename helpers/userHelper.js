@@ -6,7 +6,7 @@ const isRegistered = async (email) => {
     throw new Error(`error, ${email} está registrado`);
   }
 };
-isIdRegistered = async(id)=>{
+const isIdRegistered = async(id)=>{
   const exist = await User.findById(id)
   if(!exist){
     throw new Error(`error, este usuarip no sé encuentra`)
