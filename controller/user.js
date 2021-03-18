@@ -2,7 +2,8 @@ const { response } = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
-const {uploadFile}= require("../helpers/uploadHelper")
+const {uploadFile}= require("../helpers/uploadHelper");
+
 
 const getUser = async(req, res = response) => {
   //en caso que la url sea /api/user?q=nombre&otracosa=texto
@@ -77,22 +78,29 @@ const deleteUser = async(req, res = response)=>{
 const profileImg = async (req, res)=>{
   const {id} = req.user
   const userId = req.params.id
-  console.log(id)
+  
   if(id !=userId){
     return res.status(403).json({
       msg: "no estas autorizado para esto"
     })
   }
-  
+  const user = await User.findById(id)
+
+  console.log("encontrado",user)
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send('no fueron cargados archivos');
   }
 
-  const pathfile = await uploadFile(req.files, undefined, "users")
-   res.json({
-     msg: `imagen creada en ${pathfile}`
-   }) 
-
+  const name  = await uploadFile(req.files, undefined, "users")
+  user.img = name
+  await user.save()
+ 
+ 
+  res.json({
+     msg: `imagen creada en ${name}`,
+     user
+  }) 
+  
 }
 module.exports = {
   getUser,
