@@ -29,6 +29,14 @@ const getUser = async(req, res = response) => {
     users
   });
 };
+const getById = async(req, res)=>{
+  const {id} = req.user
+  const user = await User.findById(id)
+  res.json({
+    msg:"encontrado",
+    user
+  })
+}
 const postUser = async (req, res = response) => {
 
   const { name, email, pass, google } = req.body;
@@ -104,6 +112,7 @@ const profileImg = async (req, res)=>{
 }
 module.exports = {
   getUser,
+  getById,
   postUser,
   updateUser,
   deleteUser, 

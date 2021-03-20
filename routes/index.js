@@ -9,10 +9,13 @@ const { hasPermission, hasUserPermissionToDeleteUser} = require("../middlewares/
 const { isRegistered, isIdRegistered } = require("../helpers/userHelper");
 //router.metodo("ruta",middleware,controlador)
 router.get("/",
-[ jwtValidator,
+  [jwtValidator,
   hasPermission("ADMIN_ROLE", "obtener usuarios")]
 , userController.getUser);
 
+router.get("/data",
+  jwtValidator
+,userController.getById)
 
 router.put("/upload/:id",[
   jwtValidator,
