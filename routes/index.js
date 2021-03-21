@@ -17,11 +17,6 @@ router.get("/data",
   jwtValidator
 ,userController.getById)
 
-router.put("/upload/:id",[
-  jwtValidator,
-  check("id", "no es un id válido").isMongoId(),
-  fieldValidator
-],userController.profileImg)
 
 router.post(
   "/",
