@@ -30,7 +30,7 @@ class Server {
       useTempFiles : true,
       tempFileDir : '/tmp/',
       createParentPath:true
-  }));
+    }));
   }
 
   routes() {
@@ -38,6 +38,7 @@ class Server {
     const userRoutes = this.app.use("/api/user", require("../routes/index"));
     const appRoutes = this.app.use("/api/app", require("../routes/applications"))
     const authRoutes = this.app.use("/api/auth", require("../routes/auth"))
+    const imgRoutes = this.app.use("/api/img/", require("../routes/upload"))
   }
 
   listen() {
