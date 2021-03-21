@@ -19,6 +19,7 @@ const AppSchema = Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
+  img: { type: String }
   
 });
 
