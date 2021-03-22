@@ -8,6 +8,11 @@ cloudinary.config(process.env.CLOUDINARY_URL)
 
 const uploadImage = async (req, res)=>{
   const {collection, id} = req.params
+  if(!req.files){
+    return res.status(500).json({
+      msg:"no hay archivos cargados"
+    })
+  }
   let modelo;
 
   switch (collection) {
@@ -50,7 +55,7 @@ const uploadImage = async (req, res)=>{
   modelo.img = secure_url
   await modelo.save()
   
-  res.json({resp:modelo})
+  res.json({msg:"Actualizado!",modelo})
   
 
 
