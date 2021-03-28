@@ -1,6 +1,7 @@
 const { response } = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 
 
@@ -58,18 +59,44 @@ const postUser = async (req, res = response) => {
 const updateUser = async(req, res = response) => {
   const {id} = req.params
   const {_id, pass, google,email, ...rest} = req.body //se excluye la contraseña, google  y el email de la actualización
+
   if(pass){
-     //hash password
+    //hash password
     const salt = bcrypt.genSaltSync();
     rest.pass = bcrypt.hashSync(pass, salt); //se agrega contraseña hasheada al rest
   }
   const user = await User.findByIdAndUpdate(id,rest)
-
+  console.log(user)
   res.json({
     msg: "put",
     user
   });
 };
+
+const addHobbies = async(req,res)=>{
+  const body =req.body
+  let hobbies= []
+ 
+  const {id} = req.params
+  
+  //se filtran keys del json
+  const keys = Object.keys(body)
+  //se recorren y se saca el value del json
+  keys.map(key=>{hobbies.push(body[key])})
+
+  const user = await User.findByIdAndUpdate(id,{
+    $push:{
+      hobbies:{$each:hobbies}
+    },
+   
+  })
+
+  res.json({
+    msg:"hobbies",
+    user
+  })
+
+}
 
 const deleteUser = async(req, res = response)=>{
   const {id}=req.params
@@ -89,4 +116,5 @@ module.exports = {
   postUser,
   updateUser,
   deleteUser, 
+  addHobbies
 };

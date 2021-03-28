@@ -36,6 +36,13 @@ router.put("/:id",[
   check("id").custom(isIdRegistered),
   fieldValidator
 ] ,userController.updateUser);
+//add hobbies to User
+router.put("/hobbies/:id",[
+  check("id", "no es un id válido").isMongoId(),
+  check("id").custom(isIdRegistered),
+  fieldValidator,
+], userController.addHobbies);
+
 
 router.delete("/:id",[
   jwtValidator,
