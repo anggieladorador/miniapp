@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const { Schema, model } = require("mongoose");
 
 const UserSchema = Schema({
@@ -8,6 +9,9 @@ const UserSchema = Schema({
   role: { type: String, required: true, emun: ["ADMIN_ROLE", "USER_ROLE"], default:"USER_ROLE"},
   isActive: { type: Boolean, default: true },
   google: { type: Boolean, default: false },
+  nickname: {type:String},
+  hobbies:[String],
+  description:{type:String},
 });
 
 //rescribe metodo toJSON para no mostrar __v y pass
