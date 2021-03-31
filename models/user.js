@@ -9,9 +9,10 @@ const UserSchema = Schema({
   role: { type: String, required: true, emun: ["ADMIN_ROLE", "USER_ROLE"], default:"USER_ROLE"},
   isActive: { type: Boolean, default: true },
   google: { type: Boolean, default: false },
-  nickname: {type:String},
+  nickname: {type:String, unique:true},
   hobbies:[String],
   description:{type:String},
+  apps:[{type: mongoose.Schema.Types.ObjectId, ref: 'App'}]
 });
 
 //rescribe metodo toJSON para no mostrar __v y pass
