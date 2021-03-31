@@ -1,5 +1,5 @@
-
 const App = require("../models/app")
+const User = require("../models/user")
 const ObjectId = require("mongoose").Types.ObjectId;
 
 
@@ -10,12 +10,14 @@ const postApp  = async (req, res)=>{
   const app = new App({name, desc, link})
   app.user = id
   await app.save()
+
+  const user = await User.findByIdAndUpdate(id,{
+    $push:{apps:app.id}
+  })
   
   res.json({
     msg:"app agregada",
-    name,
-    desc,
-    link
+    app
   })
 }
 
