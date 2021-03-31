@@ -32,7 +32,7 @@ const getUser = async(req, res = response) => {
 };
 const getById = async(req, res)=>{
   const {id} = req.user
-  const user = await User.findById(id)
+  const user = await User.findById(id).populate({path:"apps",populate: { path: 'apps' }})
   res.json({
     msg:"encontrado",
     user
