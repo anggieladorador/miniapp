@@ -66,7 +66,7 @@ const updateUser = async(req, res = response) => {
     rest.pass = bcrypt.hashSync(pass, salt); //se agrega contraseña hasheada al rest
   }
   const user = await User.findByIdAndUpdate(id,rest)
-  console.log(user)
+
   res.json({
     msg: "put",
     user
@@ -74,26 +74,28 @@ const updateUser = async(req, res = response) => {
 };
 
 const addHobbies = async(req,res)=>{
-  const body =req.body
-  let hobbies= []
- 
-  const {id} = req.params
-  
-  //se filtran keys del json
-  const keys = Object.keys(body)
-  //se recorren y se saca el value del json
-  keys.map(key=>{hobbies.push(body[key])})
 
+  const body =req.body
+
+  let hobbies = []
+
+  const {id} = req.params
+  body.map(b=>{
+   
+    hobbies.push(b.hobbie)
+  })
+ 
   const user = await User.findByIdAndUpdate(id,{
     $push:{
       hobbies:{$each:hobbies}
     },
    
   })
+  
 
   res.json({
     msg:"hobbies",
-    user
+   
   })
 
 }
