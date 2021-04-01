@@ -38,6 +38,15 @@ const getById = async(req, res)=>{
     user
   })
 }
+
+const getByNickname = async(req,res)=>{
+  const {nickname} = req.params
+  const user = await User.findOne({nickname}).populate('apps',{_id:0, __v:0})
+  res.json({
+    msg:"buscando por nickname",
+    user
+  })
+}
 const postUser = async (req, res = response) => {
 
   const { name, email, pass, google } = req.body;
@@ -118,5 +127,6 @@ module.exports = {
   postUser,
   updateUser,
   deleteUser, 
-  addHobbies
+  addHobbies,
+  getByNickname
 };

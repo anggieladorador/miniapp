@@ -6,7 +6,11 @@ const userController = require("../controller/user");
 const  {jwtValidator} = require("../middlewares/jwtValidator")
 const { fieldValidator, } = require("../middlewares/fieldValidator");
 const { hasPermission, hasUserPermissionToDeleteUser} = require("../middlewares/roleValidator");
-const { isRegistered, isIdRegistered } = require("../helpers/userHelper");
+const { isRegistered, isIdRegistered, isNicknameRegistered } = require("../helpers/userHelper");
+
+
+
+
 //router.metodo("ruta",middleware,controlador)
 router.get("/",
   [jwtValidator,
@@ -17,6 +21,10 @@ router.get("/data",
   jwtValidator
 ,userController.getById)
 
+router.get("/:nickname",[
+  check("nickname").custom(isNicknameRegistered),
+  fieldValidator
+], userController.getByNickname)
 
 router.post(
   "/",

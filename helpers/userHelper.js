@@ -9,10 +9,17 @@ const isRegistered = async (email) => {
 const isIdRegistered = async(id)=>{
   const exist = await User.findById(id)
   if(!exist){
-    throw new Error(`error, este usuarip no sé encuentra`)
+    throw new Error(`error, este usuari0 no sé encuentra`)
+  }
+}
+const isNicknameRegistered = async(nickname)=>{
+  const exist = await User.findOne({nickname})
+  if(!exist){
+    throw new Error (`no hay usuarios con el nickname ${nickname}`)
   }
 }
 module.exports = {
   isRegistered,
-  isIdRegistered
+  isIdRegistered,
+  isNicknameRegistered
 };
